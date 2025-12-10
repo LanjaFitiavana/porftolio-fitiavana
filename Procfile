@@ -1,0 +1,1 @@
+web: gunicorn porft.wsgi:application --log-file -
