@@ -1,0 +1,105 @@
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <link rel="stylesheet" href="{% static 'bootstrap/bootstrap-icons.css' %}">
+    <link rel="stylesheet" href="{% static 'bootstrap/bootstrap.min.css '%}">
+    <link rel="stylesheet" href="{% static 'css/all.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    {%  if messages %}
+        {% for message in messages %}
+            <div class="fixed-bottom end-0 p-3 alert-{{message.tags}} " role="alert">
+                {{message}}
+            </div>
+        {% endfor %}
+    {% endif %}
+
+    {% block content %}
+    {% endblock %}
+    
+<script src="{% static 'bootstrap/bootstrap.bundle.min.js'%}"></script>
+<script>
+    // La fonction qui gère l'animation par incrémentation
+    function animateProgressBar(element, target, speed) {
+        let value = 0;
+        
+        // S'assurer que la barre commence à 0 pour une ré-animation propre
+        element.style.width = '0%';
+        element.setAttribute('aria-valuenow', '0');
+        element.textContent = '0%';
+
+        const interval = setInterval(() => {
+            if (value >= target) {
+                // Arrêter l'intervalle lorsque la cible est atteinte
+                clearInterval(interval);
+                return; // Sortir de la fonction
+            }
+            
+            // Incrémenter la valeur
+            value++;
+
+            // Appliquer la nouvelle largeur et les attributs
+            element.style.width = value + '%';
+            element.setAttribute('aria-valuenow', value);
+            element.textContent = value + '%';
+
+        }, speed); // 'speed' (en ms) détermine la rapidité de l'animation
+    }
+
+    // Fonction pour réinitialiser la barre à 0%
+    function resetProgressBar(element) {
+        element.style.width = '0%';
+        element.setAttribute('aria-valuenow', '0');
+        element.textContent = '0%';
+    }
+
+    // Gère l'animation basée sur le défilement (scroll)
+    function enableScrollAnimation() {
+        // Cibler toutes les barres qui ont la classe 'progress-bar' et l'attribut 'data-target'
+        const bars = document.querySelectorAll('.progress-bar[data-target]');
+        
+        // Vitesse de l'animation (en millisecondes par étape/pourcentage)
+        const animationSpeed = 10; 
+
+        if (bars.length === 0) return;
+
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                const bar = entry.target;
+                const target = parseInt(bar.getAttribute('data-target'));
+
+                // Si l'élément entre dans la vue
+                if (entry.isIntersecting) {
+                    // Animer la barre en utilisant la fonction setInterval
+                    animateProgressBar(bar, target, animationSpeed);
+                    
+                    // Laissez l'observation active si vous voulez que la barre se réinitialise en sortant
+                    // observer.unobserve(bar); // Commenté pour permettre la réinitialisation
+                } else {
+                    // Si l'élément QUITE la vue, on le réinitialise à 0%
+                    resetProgressBar(bar);
+                }
+            });
+        }, {
+            // Seuil : 0.1 signifie que l'événement se déclenche quand 10% de l'élément est visible
+            threshold: 0.1 
+        });
+
+        // 1. Initialiser et observer chaque barre
+        bars.forEach(bar => {
+            // Optionnel: Réinitialiser à 0% pour s'assurer que l'animation fonctionne au premier chargement
+            resetProgressBar(bar); 
+            observer.observe(bar);
+        });
+    }
+
+    // Lancer la fonction principale quand le document est chargé
+    document.addEventListener('DOMContentLoaded', enableScrollAnimation);
+</script>
+</body>
+</html>
