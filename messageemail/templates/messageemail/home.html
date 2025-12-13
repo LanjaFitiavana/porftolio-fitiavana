@@ -11,11 +11,11 @@
     </button>
     <div class="collapse navbar-collapse" id="navMen">
         <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-            <li class="nav-item"><a href="#propos" class="nav-link ">Propos</a></li>
-            <li class="nav-item"> <a href="#education" class="nav-link">Education</a></li>
-            <li class="nav-item"> <a href="#compt" class="nav-link">Compétence</a></li>
-            <li class="nav-item"> <a href="#projet" class="nav-link">Projet</a></li>
-            <li class="nav-item"> <a href="#contact" class="nav-link">Contact</a></li>
+            <li class="nav-item"><a href="#propos" class="nav-link  bi bi-person-badge">Propos</a></li>
+            <li class="nav-item"> <a href="#education" class="nav-link bi bi-mortarboard">Education</a></li>
+            <li class="nav-item"> <a href="#compt" class="nav-link bi bi-lightning">Compétence</a></li>
+            <li class="nav-item"> <a href="#projet" class="nav-link bi bi-kanban">Projet</a></li>
+            <li class="nav-item"> <a href="#contact" class="nav-link bi bi-envelope">Contact</a></li>
         </ul>
     </div>
     </div>
@@ -39,13 +39,29 @@ class=" p-3 container-fluid">
         <div class="row justify-content">
             <div class="col-12 ">
             <img src="{% static 'image/cv.png'%}" alt="sary" class="img-fluid rounded-circle" id="kely"><br>
-            <h1 class="fw-bold">A propos de moi </h1><br>
+            <h1 class="fw-bold">A propos de moi </h1>
+            <div class="ligne border-bottom border-5"></div><br>
             <p>Passionné par le développement web</p><br>
-                <h5>> Mail:       <a href="mailto:010rabeza@gmail.com">010rabeza@gmail.com</a></h5> <br>
-                <h5>> Téléphone:  0344809981</h5><br>
-                <h5>> GitHub:     <a href="https://github.com/LanjaFitiavana">LanjaFitiavana</a></h5><br>
-                <h5>> Age:        22 ans </h5><br>
-                <h5>> Adresse:    Antanjona Sab/Nam</h5><br>
+                <h5>
+                    <i class="bi bi-envelope-paper"></i>
+                         Mail:       <a href="mailto:010rabeza@gmail.com">010rabeza@gmail.com</a>
+                </h5> <br>
+                <h5>
+                    <i class="bi bi-telephone"></i>
+                        Téléphone:  0344809981
+                </h5><br>
+                <h5>
+                    <i class="bi bi-github"></i>
+                        GitHub:     <a href="https://github.com/LanjaFitiavana">LanjaFitiavana</a>
+                </h5><br>
+                <h5>
+                    <i class="bi bi-cake"></i>
+                         Age:        22 ans 
+                </h5><br>
+                <h5>
+                    <i class="bi bi-geo-alt"></i>
+                         Adresse:    Antanjona Sab/Nam
+                </h5><br>
                 <a href="#contact" class="text-dark text-decoration-none btn btn-primary"> contactez moi </a>
             </div>
         </div>
@@ -53,7 +69,9 @@ class=" p-3 container-fluid">
 
 
     <div class="p-3 shadow" id="education">
-    <h1 class="fw-bold">Education</h1><br>
+    <h1 class="fw-bold">Education</h1>
+    <div class="border-bottom  border-5 ligne"></div>
+    <br>
         L3 en Informatique:Base de Données et Génie Logiciels(BDGL)
     <h3>Diplômes</h3><br>
         <h5>Bac +2 en Informatique</h5>
@@ -66,7 +84,9 @@ class=" p-3 container-fluid">
 
 
     <div class="p-3 shadow" id="compt">
-<h1 class="fw-bold">Mes compétences</h1><br>
+<h1 class="fw-bold">Mes compétences</h1>
+<div class="border-bottom  border-5"></div><br>
+
 <ol>
     <li>
         <h3>Front-End</h3><br>
@@ -156,6 +176,7 @@ class=" p-3 container-fluid">
 
     <div class="p-3 shadow" id="projet">
             <h1 class="fw-bold">Mes Projets</h1>
+            <div class="ligne border-bottom border-5"></div><br>
             <p>L'ensemble de ces élèments m'a permis d'acquérir les bases de Django , et je 
             continuerai en approfondissant <br>la création d'API REST avec Django Rest Framwork
             </p><br>
@@ -244,6 +265,7 @@ class=" p-3 container-fluid">
 
     <div class="p-3 shadow" id="contact">
     <h1 class="fw-bold">Contactez Moi </h1>
+    <div class="border-bottom border-5 ligne"></div><br>
         <h6>Tous les champs ci-dessous sont obligatoire </h6>
         <form method="post">
             {% csrf_token %}

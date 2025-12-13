@@ -33,6 +33,7 @@ class Home(FormView):
                 recipient_list=[settings.MON_EMAIL_DE_RECEPTION],
                 fail_silently=False
             )
+            print(f"email envoyer{contenu}")
             messages.success(self.request, "Votre message a été envoyé avec succès !")
         except Exception as e:
             print(f"Erreur d'envoi : {e}")

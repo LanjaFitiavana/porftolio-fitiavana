@@ -31,31 +31,42 @@
 
 
 <script>
-    // La fonction qui gère l'animation par incrémentation
+// Pour la fermeture du navbar
+  document.querySelectorAll('.nav-link').forEach(link => {
+    link.addEventListener('click', () => {
+      const nav = document.getElementById('navMen');
+      const bsCollapse = new bootstrap.Collapse(nav, { toggle: false });
+      bsCollapse.hide();
+    });
+  });
+
+
+
+
+
+    // La pour l'animation du bar
     function animateProgressBar(element, target, speed) {
         let value = 0;
-        
-        // S'assurer que la barre commence à 0 pour une ré-animation propre
+
         element.style.width = '0%';
         element.setAttribute('aria-valuenow', '0');
         element.textContent = '0%';
 
         const interval = setInterval(() => {
             if (value >= target) {
-                // Arrêter l'intervalle lorsque la cible est atteinte
+
                 clearInterval(interval);
-                return; // Sortir de la fonction
+                return; 
             }
-            
-            // Incrémenter la valeur
+
             value++;
 
-            // Appliquer la nouvelle largeur et les attributs
+
             element.style.width = value + '%';
             element.setAttribute('aria-valuenow', value);
             element.textContent = value + '%';
 
-        }, speed); // 'speed' (en ms) détermine la rapidité de l'animation
+        }, speed); 
     }
 
     // Fonction pour réinitialiser la barre à 0%
