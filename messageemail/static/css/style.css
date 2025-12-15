@@ -43,7 +43,8 @@ label{
 textarea{   
     border: 1px solid rgb(232, 232, 243);
     border-radius: 15px;
-    transition: border-color 1s;   
+    transition: border-color 1s; 
+    height:100px;  
     width: 100%;
     text-align: center;
 }
