@@ -33,7 +33,7 @@ class Home(FormView):
                 from_email=settings.DEFAULT_FROM_EMAIL,
                 recipient_list=[settings.MON_EMAIL_DE_RECEPTION],
                 fail_silently=False,
-                Timeout=settings.EMAIL_TIMEOUT
+                timeout=settings.EMAIL_TIMEOUT
             )
             print(f"email envoyer{contenu}")
             messages.success(self.request, "Votre message a été envoyé avec succès !")
