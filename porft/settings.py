@@ -9,7 +9,6 @@ https://docs.djangoproject.com/en/5.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.2/ref/settings/
 """
-
 from pathlib import Path
 import environ
 import os
@@ -30,7 +29,7 @@ environ.Env.read_env(os.path.join(BASE_DIR, ".env"))
 SECRET_KEY = env('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 ALLOWED_HOSTS = ['*']
 
 
@@ -144,16 +143,25 @@ STATIC_ROOT = BASE_DIR/'staticfiles'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
-MON_EMAIL = env('MON_EMAIL')
-MON_MOT_DE_PASSE = env('MON_MOT_DE_PASSE')
-MON_EMAIL_DE_RECEPTION = env('MON_EMAIL_DE_RECEPTION')
+
+
+
 
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST = 'smtp.mailersend.net'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
+EMAIL_USE_SSL = False
 
-EMAIL_HOST_USER = MON_EMAIL
-DEFAULT_FROM_EMAIL = MON_EMAIL
-EMAIL_HOST_PASSWORD = MON_MOT_DE_PASSE
+EMAIL_HOST_USER = env('MON_EMAIL')          # username SMTP MailerSend
+EMAIL_HOST_PASSWORD = env('MON_MOT_DE_PASSE')
+
+# FROM email doit être un email valide sur ton domaine MailerSend
+DEFAULT_FROM_EMAIL = 'no-reply@test-ywj2lpnxr0mg7oqz.mlsender.net'
+
+# Email de réception
+MON_EMAIL_DE_RECEPTION = env('MON_EMAIL_DE_RECEPTION')
+
+# Timeout pour éviter le worker timeout sur Render
+EMAIL_TIMEOUT = 10

@@ -5,6 +5,9 @@ from django.urls import reverse_lazy
 from django.core.mail import send_mail
 from django.conf import settings
 from django.contrib import messages
+import logging
+import logging
+logger = logging.getLogger(__name__)
 
 
 class Home(FormView):
@@ -14,7 +17,6 @@ class Home(FormView):
 
     def form_valid(self, form):
         message_instance = form.save()
-
         nom = message_instance.nom
         email_exp = message_instance.email
         contenu = message_instance.contenu
@@ -31,13 +33,13 @@ class Home(FormView):
                 message=contenu_email,
                 from_email=settings.DEFAULT_FROM_EMAIL,
                 recipient_list=[settings.MON_EMAIL_DE_RECEPTION],
-                fail_silently=False
+                fail_silently=False,
+                timeout=settings.EMAIL_TIMEOUT
             )
-            print(f"email envoyer{contenu}")
             messages.success(self.request, "Votre message a été envoyé avec succès !")
         except Exception as e:
-            print(f"Erreur d'envoi : {e}")
             messages.error(self.request, "Erreur lors de l'envoi de l'email. Veuillez réessayer.")
+            logger.error(f"Erreur d'envoi de l'email : {e}")
 
         return super().form_valid(form)
 
