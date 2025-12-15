@@ -1,12 +1,15 @@
-
 from django.shortcuts import render, redirect
 from django.views.generic import FormView
 from .forms import ContactForm
 from django.urls import reverse_lazy
-from django.core.mail import send_mail
+from django.core.mail import send_mail, BadHeaderError, SMTPException
 from django.conf import settings
 from django.contrib import messages
+import logging
 
+# Configurer le logging pour voir les détails SMTP
+logger = logging.getLogger(__name__)
+logging.basicConfig(level=logging.DEBUG)
 
 class Home(FormView):
     template_name = 'messageemail/home.html'
@@ -33,12 +36,18 @@ class Home(FormView):
                 from_email=settings.DEFAULT_FROM_EMAIL,
                 recipient_list=[settings.MON_EMAIL_DE_RECEPTION],
                 fail_silently=False,
-                timeout=settings.EMAIL_TIMEOUT
+                timeout=getattr(settings, 'EMAIL_TIMEOUT', 10)
             )
-            print(f"email envoyer{contenu}")
+            logger.info(f"Email envoyé avec succès à {settings.MON_EMAIL_DE_RECEPTION}")
             messages.success(self.request, "Votre message a été envoyé avec succès !")
+        except BadHeaderError as e:
+            logger.error(f"BadHeaderError: {e}")
+            messages.error(self.request, "Erreur: mauvais en-tête dans l'email.")
+        except SMTPException as e:
+            logger.error(f"Erreur SMTP: {e}")
+            messages.error(self.request, f"Erreur SMTP: {e}")
         except Exception as e:
-            print(f"Erreur d'envoi : {e}")
-            messages.error(self.request, "Erreur lors de l'envoi de l'email. Veuillez réessayer.")
+            logger.error(f"Erreur inconnue lors de l'envoi de l'email: {e}")
+            messages.error(self.request, f"Erreur lors de l'envoi de l'email: {e}")
 
         return super().form_valid(form)
