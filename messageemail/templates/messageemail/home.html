@@ -35,7 +35,7 @@ class=" p-3 container-fluid">
     </div><br><br><br>
 
 
-    <div class="p-3 shadow container-fluid " >
+    <div class="p-3 shadow container-fluid " id="propos">
         <div class="row justify-content">
             <div class="col-12 ">
             <img src="{% static 'image/cv.png'%}" alt="sary" class="img-fluid rounded-circle" id="kely"><br>
@@ -287,16 +287,43 @@ class=" p-3 container-fluid">
     <h1 class="fw-bold loko ">Contactez Moi </h1>
     <div class="border-bottom border-5 ligne"></div><br>
         <h6>Tous les champs ci-dessous sont obligatoire </h6>
-        <form method="post">
-            {% csrf_token %}
-                {{ form.as_p }}
-                <button type="submit" class="btn btn-primary border rounded-pill w-25 ms-5">envoyer</button>
-        </form>
+            <form id="contact-form">
+  <input type="text" name="name" placeholder="Votre nom" required  class="in"/>
+  <input type="email" name="email" placeholder="Votre email" required  class="in"/>
+  <textarea name="message" placeholder="Message" required class="in"></textarea>
+  <button type="submit" class="btn btn-primary border rounded-pill w-25 ms-5">envoyer</button>
+</form>
+
+
     </div>
 </div>
 
 
 
+<script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+<script>
+  (function(){
+    emailjs.init("ZL1IL_hSajFosP-II");
+  })();
+
+  document.getElementById("contact-form").addEventListener("submit", function(e) {
+    e.preventDefault();
+
+    emailjs.sendForm(
+      "poste010",
+      "template_1w6mwfc",
+      this
+    ).then(
+      function() {
+        alert("Message envoyé avec succès ✅");
+      },
+      function(error) {
+        alert("Erreur lors de l’envoi ❌");
+        console.log(error);
+      }
+    );
+  });
+</script>
 
 
 {% endblock %}
