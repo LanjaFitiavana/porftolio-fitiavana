@@ -2,7 +2,8 @@ from django.shortcuts import render, redirect
 from django.views.generic import FormView
 from .forms import ContactForm
 from django.urls import reverse_lazy
-from django.core.mail import send_mail, BadHeaderError, SMTPException
+from django.core.mail import send_mail, BadHeaderError
+from smtplib import SMTPException
 from django.conf import settings
 from django.contrib import messages
 import logging
